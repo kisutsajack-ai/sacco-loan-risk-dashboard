@@ -2,16 +2,16 @@
 
 ## 🚀 Project Overview
 
-This project demonstrates an **end-to-end data pipeline and analytics solution** 
-for monitoring SACCO loan risk, repayment behavior, and overdue trends across members.
+This project builds an **end-to-end data pipeline and analytics solution** 
+to monitor SACCO loan risk, repayment behavior and overdue trends across members.
+
+It simulates how financial institutions can:
+- Detect high-risk borrowers
+- Monitor loan performance
+- Automate reporting workflows
 
 The solution integrates:
-
-* **Supabase (PostgreSQL)** → Data storage
-* **n8n** → Workflow automation & business logic
-* **Africa's Talking** → SMS alerts for high-risk & overdue loans
-* **Google Sheets** → Intermediate structured data layer
-* **Power BI** → Data visualization & dashboarding
+Supabase → n8n → Google Sheets → Power BI
 
 👉 The goal is to simulate a **real-world financial risk monitoring system** 
 suitable for Kenyan SACCOs.
@@ -44,7 +44,6 @@ Google Sheets (5 Structured Output Tabs)
         ↓
 Power BI Dashboard (Visualization & Reporting)
 ```
-
 ---
 
 ## 🛠️ Prerequisites
@@ -293,6 +292,7 @@ Please follow up immediately.
 * Add **member photos and loan purpose** tracking
 * Deploy as a **cloud-based analytics solution**
 * Add **WhatsApp alerts** in addition to SMS
+* Build predictive model for loan default
 
 ---
 
