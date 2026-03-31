@@ -2,8 +2,7 @@
 
 ## 🚀 Project Overview
 
-This project builds an **end-to-end data pipeline and analytics solution** 
-to monitor SACCO loan risk, repayment behavior and overdue trends across members.
+This project is a complete end-to-end data system designed to monitor SACCO loan performance, identify high-risk borrowers and automate reporting.
 
 It simulates how financial institutions can:
 - Detect high-risk borrowers
@@ -11,7 +10,7 @@ It simulates how financial institutions can:
 - Automate reporting workflows
 
 The solution integrates:
-Supabase → n8n → Google Sheets → Power BI
+Google Form → n8n (Webhook) → Supabase → n8n (Monitoring) → Africa's Talking (SMS Alerts) → Google Sheets → Power BI
 
 👉 The goal is to simulate a **real-world financial risk monitoring system** 
 suitable for Kenyan SACCOs.
@@ -27,16 +26,40 @@ SACCOs need to:
 * Detect **overdue loans** before they become bad debts
 * Send **timely SMS alerts** to members and officers
 * Present **clear dashboards** to the board
+👉 This system solves that by automating the entire pipeline — from data entry to insights.
 
-This project automates the entire process — from data storage to insights.
+This project automates the entire process — from data collection, data storage to insights.
+
+---
+## 🆕 Data Entry Layer (New)
+
+To simulate real-world usage, a Google Form was introduced for SACCO transaction entry.
+
+### Flow:
+Google Form → n8n Webhook → Supabase
+
+This allows:
+- Allow SACCO staff to easily record transactions
+- Treasurers to submit transactions easily
+- Automatic data capture without manual database edits
+- Seamless integration with the monitoring system
+
+### Supported Transactions:
+- New Loan Disbursement
+- Repayment Updates
+- Loan Status Updates
 
 ---
 
 ## ⚙️ Architecture Overview
 ```
+Google Form (Data Entry)
+        ↓
+n8n Workflow 1 (Webhook → Supabase)
+        ↓
 Supabase (PostgreSQL Database)
         ↓
-n8n Workflow (Automation + Risk Scoring Logic)
+n8n Workflow 2 (Automation + Monitoring + Risk Scoring Logic)
         ↓
 Africa's Talking (SMS Alerts)
         ↓
@@ -101,6 +124,29 @@ CREATE TABLE IF NOT EXISTS sacco_loans (
 ---
 
 ## 🔄 2. n8n (Automation & Logic Layer)
+
+🔄 Workflow 1: Data Capture (n8n Webhook)
+Trigger:
+Webhook (connected to Google Form)
+
+Function:
+Receives transaction data
+Cleans and formats input
+Inserts or updates records in Supabase
+
+🔄 Workflow 2: Monitoring & Risk Analysis
+Trigger:
+Scheduled (Cron)
+
+Function:
+Fetches all loan records
+Calculates:
+Risk Score
+Risk Level (Low / Medium / High)
+Days Past Due
+Generates:
+Risk explanations
+Alerts for high-risk or overdue loans
 
 ### Workflow Structure:
 ```
