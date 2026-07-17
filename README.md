@@ -355,4 +355,4 @@ This project demonstrates the ability to:
 
 ## ⭐ If you like this project
 
-Feel free to star ⭐ the repository and connect with me on LinkedIn!
+Feel free to star ⭐ the repository and connect with me.
