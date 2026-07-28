@@ -2,7 +2,7 @@
 
 ## 🚀 Project Overview
 
-This project is a complete end-to-end data system designed to monitor SACCO loan performance, identify high-risk borrowers and automate reporting.
+This project is a complete end-to-end data system designed to monitor SACCO loan performance, identify high-risk borrowers and automate reporting. Its is an end-to-end loan-monitoring prototype designed for Kenyan SACCOs. It captures loan activity, stores records in PostgreSQL, calculates rule-based risk scores, sends SMS alerts, prepares structured reporting outputs and visualizes portfolio performance in Power BI.
 
 It simulates how financial institutions can:
 - Detect high-risk borrowers
@@ -10,7 +10,7 @@ It simulates how financial institutions can:
 - Automate reporting workflows
 
 The solution integrates:
-Google Form → n8n (Webhook) → Supabase → n8n (Monitoring) → Africa's Talking (SMS Alerts) → Google Sheets → Power BI
+Google Form → n8n (Webhook) → Supabase → n8n (Risk monitoring) → Africa's Talking (SMS Alerts) → Google Sheets → Power BI
 
 👉 The goal is to simulate a **real-world financial risk monitoring system** 
 suitable for Kenyan SACCOs.
@@ -19,18 +19,31 @@ suitable for Kenyan SACCOs.
 
 ## 🧠 Business Problem
 
-SACCOs need to:
+SACCOs need to identify repayment problems early, but fragmented records and manual follow-up can delay intervention. Management requires a reliable way to:
 
 * Identify **high-risk borrowers** early
 * Monitor **loan repayment performance**
 * Detect **overdue loans** before they become bad debts
 * Send **timely SMS alerts** to members and officers
-* Present **clear dashboards** to the board
+* Present **clear dashboards** to the management and board
+  
 👉 This system solves that by automating the entire pipeline — from data entry to insights.
 
 This project automates the entire process — from data collection, data storage to insights.
 
+## Approach
+
+1. Created a Google Form transaction-entry layer for loan disbursements, repayments, and status updates.
+2. Used n8n to validate and send submissions to Supabase.
+3. Designed a PostgreSQL loan table containing borrower, repayment, collateral, guarantor, maturity, and risk fields.
+4. Implemented rule-based scoring in JavaScript using days past due, M-Pesa payment behaviour, guarantor reliability, collateral coverage, and seasonal-income risk.
+5. Classified loans as Low, Medium, or High Risk and generated explanations.
+6. Configured Africa's Talking sandbox SMS alerts for high-risk and overdue cases.
+7. Produced five controlled Google Sheets outputs.
+8. Connected the reporting dataset to Power BI for portfolio monitoring.
+
 ---
+
 ## 🆕 Data Entry Layer (New)
 
 To simulate real-world usage, a Google Form was introduced for SACCO transaction entry.
@@ -320,6 +333,7 @@ Please follow up immediately.
 
 | Tool | Purpose |
 |------|---------|
+| Google Forms | Transaction capture |
 | Supabase (PostgreSQL) | Database & data storage |
 | n8n | Workflow automation |
 | Africa's Talking | SMS alerts |
@@ -329,6 +343,38 @@ Please follow up immediately.
 | JavaScript | Risk scoring logic in n8n |
 
 ---
+
+## Insights
+
+* A high-risk population of 12 out of 40 sample loans indicates the need for prioritized case management.
+* Ten overdue loans create an immediate collections queue.
+v An on-time rate of 58% shows material repayment-performance weakness within the sample.
+* Combining arrears, payment behaviour, guarantor strength, collateral, and income seasonality provides more context than days past due alone.
+* Automated explanations make risk scores more usable for non-technical officers.
+
+## Recommendations
+
+* Assign high-risk and overdue accounts to named officers with follow-up deadlines.
+* Review risk thresholds using historical repayment outcomes before live deployment.
+* Create escalation stages for early arrears, severe arrears, and repeat delinquency.
+* Monitor guarantor concentration and reliability separately from borrower risk.
+* Introduce data-quality controls at entry, including required fields and duplicate checks.
+* Obtain consent, define access controls, and apply Kenyan data-protection requirements before using personal data or live SMS.
+
+## Business Value
+
+* Creates an auditable path from transaction entry to management reporting.
+* Reduces manual consolidation and duplicate rows.
+* Converts portfolio data into prioritized follow-up actions.
+* Demonstrates workflow automation, database design, business rules, alerts, and BI reporting in one solution.
+
+## Limitations
+
+* The dataset and scoring model are illustrative.
+* SMS was tested in the Africa's Talking sandbox.
+* The rules have not been statistically validated against historical defaults.
+* Production security, consent, retention, backup, and role-based access require further design.
+* Google Sheets is suitable for reporting outputs but should not be the production system of record.
 
 ## 🚀 Future Improvements
 
